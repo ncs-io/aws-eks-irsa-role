@@ -20,11 +20,12 @@ jobs:
       working-directory: ./
     - name: Install terraform-docs
       run: |
+        mkdir terraform-docs
         curl -sSLo ./terraform-docs.tar.gz https://terraform-docs.io/dl/v0.16.0/terraform-docs-v0.16.0-$(uname)-amd64.tar.gz
-        tar -xzf terraform-docs.tar.gz
-        chmod +x terraform-docs
+        tar -xzf terraform-docs.tar.gz -C terraform-docs
+        chmod +x terraform-docs/terraform-docs
     - name: Check README
       run: |
-        ./terraform-docs . > README.test
+        ./terraform-docs/terraform-docs . > README.test
         diff README.md README.test
       working-directory: ./
