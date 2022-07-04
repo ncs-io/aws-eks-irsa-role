@@ -14,7 +14,17 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Terraform Format
+    - name: Check Terraform Format
       run: |
         terraform fmt -check -recursive -diff
+      working-directory: ./
+    - name: Install terraform-docs
+      run: |
+        curl -sSLo ./terraform-docs.tar.gz https://terraform-docs.io/dl/v0.16.0/terraform-docs-v0.16.0-$(uname)-amd64.tar.gz
+        tar -xzf terraform-docs.tar.gz
+        chmod +x terraform-docs
+    - name: Check README
+      run: |
+        ./terraform-docs . > README.test
+        diff README.md README.test
       working-directory: ./
